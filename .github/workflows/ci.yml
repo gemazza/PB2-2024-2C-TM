@@ -7,9 +7,12 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -20,8 +23,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Compile Java code
+      run: javac -cp .:lib/* -d bin src/**/*.java
 
-    - name: Run tests
-      run: ./gradlew test
+    - name: Run all JUnit tests
+      run: |
+        TEST_CLASSES=$(find bin -name "*Test.class" | sed 's/bin\///;s/\.class//;s/\//./g')
+        java -cp .:bin:lib/* org.junit.runner.JUnitCore $TEST_CLASSES

@@ -24,7 +24,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Compile Java code
-      run: javac -cp .:lib/* -d bin src/ar/edu/unlam/pb2/dominio/*.java test/ar/edu/unlam/pb2/dominio/*.java
+      run: javac -cp .:lib/* -d bin src/**/*.java test/**/*.java
 
     - name: Run all JUnit tests
       run: |
